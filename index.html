@@ -1,1006 +1,965 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#123d35">
-
-  <title>Precious Pharmacy — Your Health, Your Future</title>
-
-  <meta
-    name="description"
-    content="Discover everyday wellness essentials and pharmacy services with Precious Pharmacy."
-  >
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  >
-
-  <style>
-    :root {
-      --forest: #123d35;
-      --forest-deep: #092b25;
-      --green: #176b56;
-      --lime: #d6f36a;
-      --ivory: #f8f7f1;
-      --white: #ffffff;
-      --ink: #192b25;
-      --muted: #707a72;
-      --line: #e5e8df;
-      --danger: #b83a3a;
-      --shadow: 0 18px 60px rgba(18, 61, 53, .10);
-      --radius: 24px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 100px;
-    }
-
-    body {
-      font-family: "DM Sans", sans-serif;
-      background: var(--ivory);
-      color: var(--ink);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    body.modal-open {
-      overflow: hidden;
-    }
-
-    button,
-    input,
-    select,
-    textarea {
-      font: inherit;
-    }
-
-    button,
-    a {
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    button:focus-visible,
-    a:focus-visible,
-    input:focus-visible,
-    select:focus-visible {
-      outline: 3px solid var(--green);
-      outline-offset: 4px;
-    }
-
-    .container {
-      width: min(1180px, calc(100% - 40px));
-      margin-inline: auto;
-    }
-
-    .announcement {
-      background: var(--forest-deep);
-      color: white;
-      text-align: center;
-      padding: 9px 15px;
-      font-size: 12px;
-      letter-spacing: .06em;
-    }
-
-    .announcement strong {
-      color: var(--lime);
-    }
-
-    /* Navigation */
-
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(248, 247, 241, .92);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(229, 232, 223, .8);
-    }
-
-    .nav-inner {
-      min-height: 82px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 28px;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      font-family: "Manrope", sans-serif;
-      font-weight: 800;
-      font-size: 19px;
-      letter-spacing: -.7px;
-      white-space: nowrap;
-    }
-
-    .logo-mark {
-      display: grid;
-      place-items: center;
-      width: 42px;
-      height: 42px;
-      background: var(--forest);
-      color: var(--lime);
-      border-radius: 14px;
-      font-size: 24px;
-      transition: transform .3s ease;
-    }
-
-    .logo:hover .logo-mark {
-      transform: rotate(-8deg) scale(1.06);
-    }
-
-    .logo small {
-      display: block;
-      color: var(--muted);
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      margin-top: -5px;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 27px;
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .nav-links a {
-      position: relative;
-      color: #52615a;
-      transition: color .2s;
-    }
-
-    .nav-links a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -7px;
-      height: 2px;
-      width: 0;
-      background: var(--green);
-      transition: width .25s;
-    }
-
-    .nav-links a:hover {
-      color: var(--forest);
-    }
-
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .icon-btn {
-      min-width: 44px;
-      height: 44px;
-      border: 1px solid var(--line);
-      border-radius: 15px;
-      background: white;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      font-weight: 700;
-      transition: transform .2s, background .2s;
-    }
-
-    .icon-btn:hover {
-      transform: translateY(-2px);
-      background: var(--lime);
-    }
-
-    .cart-count {
-      min-width: 21px;
-      height: 21px;
-      padding-inline: 5px;
-      display: grid;
-      place-items: center;
-      border-radius: 50px;
-      background: var(--forest);
-      color: white;
-      font-size: 10px;
-    }
-
-    .menu-toggle {
-      display: none;
-    }
-
-    /* Buttons */
-
-    .btn {
-      border: 0;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-      padding: 14px 21px;
-      min-height: 48px;
-      border-radius: 14px;
-      font-weight: 700;
-      font-size: 13px;
-      transition:
-        transform .25s ease,
-        box-shadow .25s ease,
-        background .25s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 28px rgba(18, 61, 53, .16);
-    }
-
-    .btn:active {
-      transform: scale(.97);
-    }
-
-    .btn-primary {
-      background: var(--forest);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--green);
-    }
-
-    .btn-lime {
-      background: var(--lime);
-      color: var(--forest-deep);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--forest);
-      border: 1px solid rgba(18, 61, 53, .22);
-    }
-
-    .btn-full {
-      width: 100%;
-    }
-
-    /* Hero */
-
-    .hero {
-      position: relative;
-      padding: 74px 0 82px;
-      overflow: hidden;
-      isolation: isolate;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      width: 570px;
-      height: 570px;
-      border-radius: 50%;
-      background: rgba(214, 243, 106, .20);
-      filter: blur(2px);
-      top: -210px;
-      right: -180px;
-      z-index: -1;
-      animation: ambient 9s ease-in-out infinite alternate;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      background: rgba(23, 107, 86, .08);
-      bottom: -160px;
-      left: -100px;
-      z-index: -1;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 50px;
-      align-items: center;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-weight: 800;
-      color: var(--green);
-      margin-bottom: 22px;
-    }
-
-    .eyebrow::before {
-      content: "";
-      height: 2px;
-      width: 25px;
-      background: var(--green);
-    }
-
-    .hero h1 {
-      max-width: 650px;
-      font-family: "Manrope", sans-serif;
-      font-size: clamp(42px, 5.5vw, 72px);
-      letter-spacing: -4px;
-      line-height: 1.04;
-      font-weight: 800;
-    }
-
-    .hero h1 span {
-      color: var(--green);
-      position: relative;
-      display: inline-block;
-    }
-
-    .hero h1 span::after {
-      content: "";
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      height: 6px;
-      width: 100%;
-      background: var(--lime);
-      border-radius: 10px;
-      z-index: -1;
-      transform-origin: left;
-      animation: underlineIn .9s .5s both;
-    }
-
-    .hero-copy {
-      color: var(--muted);
-      font-size: 15px;
-      max-width: 450px;
-      margin: 24px 0 28px;
-      line-height: 1.9;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .hero-proof {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 22px;
-      margin-top: 35px;
-    }
-
-    .proof-item {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      color: #53635a;
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .proof-icon {
-      width: 33px;
-      height: 33px;
-      display: grid;
-      place-items: center;
-      border-radius: 11px;
-      background: white;
-      color: var(--green);
-      box-shadow: 0 5px 20px rgba(18, 61, 53, .06);
-    }
-
-    /* Hero artwork */
-
-    .hero-art {
-      position: relative;
-      min-height: 475px;
-      display: grid;
-      place-items: center;
-    }
-
-    .art-backdrop {
-      position: absolute;
-      width: min(420px, 100%);
-      aspect-ratio: 1;
-      border-radius: 48% 52% 45% 55% / 55% 43% 57% 45%;
-      background: var(--lime);
-      transform: rotate(-8deg);
-      animation: blob 11s ease-in-out infinite alternate;
-    }
-
-    .art-backdrop::after {
-      content: "";
-      position: absolute;
-      inset: 20px;
-      border: 1px solid rgba(18, 61, 53, .14);
-      border-radius: inherit;
-    }
-
-    .hero-photo {
-      position: relative;
-      width: 84%;
-      height: 390px;
-      object-fit: cover;
-      border-radius: 180px 180px 35px 35px;
-      box-shadow: 0 30px 70px rgba(18, 61, 53, .22);
-      animation: floatMain 6s ease-in-out infinite;
-    }
-
-    .float-card {
-      position: absolute;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: rgba(255, 255, 255, .95);
-      backdrop-filter: blur(12px);
-      padding: 13px 16px;
-      border-radius: 17px;
-      box-shadow: var(--shadow);
-      animation: floatCard 5s ease-in-out infinite;
-    }
-
-    .float-card.one {
-      top: 52px;
-      left: -4px;
-    }
-
-    .float-card.two {
-      right: -10px;
-      bottom: 72px;
-      animation-delay: -2s;
-    }
-
-    .float-card-icon {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      background: #e8f2df;
-      border-radius: 13px;
-      font-size: 20px;
-    }
-
-    .float-card strong {
-      display: block;
-      font-size: 12px;
-    }
-
-    .float-card small {
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .spark {
-      position: absolute;
-      color: var(--green);
-      font-size: 32px;
-      animation: spin 14s linear infinite;
-    }
-
-    .spark-a {
-      top: 60px;
-      right: 50px;
-    }
-
-    .spark-b {
-      bottom: 55px;
-      left: 30px;
-      font-size: 24px;
-      animation-direction: reverse;
-    }
-
-    /* Trust strip */
-
-    .trust-strip {
-      background: white;
-      border-block: 1px solid var(--line);
-    }
-
-    .trust-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .trust-item {
-      padding: 25px 18px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 12px;
-      border-right: 1px solid var(--line);
-    }
-
-    .trust-item:last-child {
-      border-right: 0;
-    }
-
-    .trust-symbol {
-      font-size: 22px;
-    }
-
-    .trust-item strong {
-      display: block;
-      font-size: 12px;
-    }
-
-    .trust-item small {
-      display: block;
-      font-size: 10px;
-      color: var(--muted);
-    }
-
-    /* General sections */
-
-    .section {
-      padding: 95px 0;
-    }
-
-    .section-white {
-      background: white;
-    }
-
-    .section-heading {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 30px;
-      margin-bottom: 35px;
-    }
-
-    .section-heading h2 {
-      font-family: "Manrope", sans-serif;
-      font-size: clamp(30px, 4vw, 44px);
-      letter-spacing: -2px;
-      line-height: 1.16;
-      margin-bottom: 12px;
-    }
-
-    .section-heading p {
-      color: var(--muted);
-      font-size: 13px;
-      max-width: 470px;
-    }
-
-    .text-link {
-      color: var(--green);
-      font-weight: 800;
-      font-size: 12px;
-      white-space: nowrap;
-    }
-
-    .text-link:hover {
-      text-decoration: underline;
-    }
-
-    /* Search */
-
-    .search-box {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 17px;
-      padding: 7px 8px 7px 17px;
-      margin-bottom: 22px;
-      transition: border-color .2s, box-shadow .2s;
-    }
-
-    .search-box:focus-within {
-      border-color: var(--green);
-      box-shadow: 0 0 0 4px rgba(23, 107, 86, .08);
-    }
-
-    .search-box > span {
-      font-size: 19px;
-    }
-
-    .search-box input {
-      border: 0;
-      outline: 0;
-      background: transparent;
-      min-width: 0;
-      flex: 1;
-      padding: 11px 0;
-      color: var(--ink);
-      font-size: 13px;
-    }
-
-    .search-box input:focus-visible {
-      outline: none;
-    }
-
-    .search-box button {
-      border: 0;
-      background: var(--forest);
-      color: white;
-      border-radius: 12px;
-      padding: 12px 19px;
-      font-weight: 700;
-      font-size: 12px;
-    }
-
-    /* Categories */
-
-    .category-list {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding: 4px 2px 15px;
-      margin-bottom: 15px;
-      scrollbar-width: thin;
-    }
-
-    .category-chip {
-      flex-shrink: 0;
-      border: 1px solid var(--line);
-      background: white;
-      color: #53635a;
-      border-radius: 100px;
-      padding: 10px 16px;
-      font-size: 11px;
-      font-weight: 700;
-      transition: background .2s, color .2s, transform .2s;
-    }
-
-    .category-chip:hover {
-      transform: translateY(-2px);
-    }
-
-    .category-chip.active {
-      background: var(--forest);
-      border-color: var(--forest);
-      color: white;
-    }
-
-    .catalog-toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 23px;
-    }
-
-    .catalog-toolbar p {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .catalog-toolbar select {
-      border: 1px solid var(--line);
-      background: white;
-      border-radius: 11px;
-      padding: 10px 13px;
-      font-size: 12px;
-      color: var(--ink);
-      max-width: 100%;
-    }
-
-    /* Product cards */
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 20px;
-    }
-
-    .product-card {
-      position: relative;
-      background: white;
-      border: 1px solid #edf0e8;
-      border-radius: 21px;
-      padding: 13px;
-      transition:
-        transform .3s ease,
-        box-shadow .3s ease,
-        border-color .3s ease;
-      animation: cardEnter .5s both;
-    }
-
-    .product-card:hover {
-      transform: translateY(-7px);
-      box-shadow: 0 22px 45px rgba(18, 61, 53, .10);
-      border-color: #d4dfcf;
-    }
-
-    .product-visual {
-      position: relative;
-      height: 195px;
-      border-radius: 15px;
-      overflow: hidden;
-      background: #f0f3e9;
-      display: grid;
-      place-items: center;
-      isolation: isolate;
-    }
-
-    .product-visual img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform .6s cubic-bezier(.2, .8, .2, 1);
-    }
-
-    .product-card:hover .product-visual img {
-      transform: scale(1.07);
-    }
-
-    .product-emoji {
-      font-size: 70px;
-      filter: drop-shadow(0 10px 10px rgba(18, 61, 53, .12));
-      transition: transform .3s;
-    }
-
-    .product-card:hover .product-emoji {
-      transform: scale(1.08) rotate(-3deg);
-    }
-
-    .product-badge {
-      position: absolute;
-      z-index: 2;
-      top: 10px;
-      left: 10px;
-      border-radius: 7px;
-      padding: 6px 9px;
-      background: var(--lime);
-      color: var(--forest);
-      font-size: 9px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .4px;
-    }
-
-    .quick-view {
-      position: absolute;
-      z-index: 3;
-      bottom: 10px;
-      left: 10px;
-      right: 10px;
-      border: 0;
-      background: rgba(255, 255, 255, .95);
-      padding: 10px;
-      border-radius: 10px;
-      font-size: 11px;
-      font-weight: 800;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity .25s, transform .25s;
-    }
-
-    .product-card:hover .quick-view,
-    .quick-view:focus-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .product-info {
-      padding: 15px 3px 4px;
-    }
-
-    .product-category {
-      color: var(--green);
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      font-size: 9px;
-      font-weight: 800;
-    }
-
-    .product-info h3 {
-      font-size: 14px;
-      line-height: 1.4;
-      margin: 7px 0 5px;
-    }
-
-    .product-description {
-      font-size: 10px;
-      color: var(--muted);
-      line-height: 1.6;
-      min-height: 32px;
-    }
-
-    .product-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin-top: 13px;
-    }
-
-    .product-price {
-      font-size: 16px;
-      font-weight: 800;
-      letter-spacing: -.4px;
-    }
-
-    .add-btn {
-      width: 39px;
-      height: 39px;
-      flex-shrink: 0;
-      border: 0;
-      border-radius: 12px;
-      background: var(--forest);
-      color: white;
-      font-size: 21px;
-      transition: transform .2s, background .2s;
-    }
-
-    .add-btn:hover {
-      transform: rotate(90deg);
-      background: var(--green);
-    }
-
-    .add-btn:active {
-      transform: scale(.9);
-    }
-
-    .empty-state {
-      display: none;
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--muted);
-    }
-
-    .empty-state span {
-      display: block;
-      font-size: 42px;
-      margin-bottom: 10px;
-    }
-
-    /* Services */
-
-    .service-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .service-card {
-      position: relative;
-      overflow: hidden;
-      min-height: 255px;
-      background: var(--ivory);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 29px;
-      transition: transform .3s, box-shadow .3s;
-    }
-
-    .service-card:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow);
-    }
-
-    .service-card::after {
-      content: "";
-      position: absolute;
-      width: 130px;
-      height: 130px;
-      right: -40px;
-      bottom: -45px;
-      background: rgba(214, 243, 106, .38);
-      border-radius: 50%;
-      transition: transform .4s;
-    }
-
-    .service-card:hover::after {
-      transform: scale(1.5);
-    }
-
-    .service-icon {
-      width: 53px;
-      height: 53px;
-      display: grid;
-      place-items: center;
-      background: white;
-      border-radius: 17px;
-      font-size: 25px;
-      margin-bottom: 23px;
-      box-shadow: 0 5px 20px rgba(18, 61, 53, .06);
-    }
-
-    .service-card h3 {
-      font-size: 17px;
-      margin-bottom: 9px;
-    }
-
-    .service-card p {
-      color: var(--muted);
-      font-size: 12px;
-      max-width: 280px;
-      margin-bottom: 20px;
-    }
-
-    .service-card a,
-    .service-card button {
-      position: relative;
-      z-index: 2;
-      border: 0;
-      background: transparent;
-      color: var(--green);
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    /* Prescription */
-
-    .prescription-section {
-      padding: 35px 0 95px;
-    }
-
-    .prescription-box {
-      display: grid;
-      grid-template-columns: 1fr .8fr;
-      gap: 35px;
-      align-items: center;
-      background: var(--forest);
-      color: white;
-      padding: 48px;
-      border-radius: 30px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .prescription-box::after {
-      content: "";
-      position: absolute;
-      width: 300px;
-      height: 300px;
-      right: -110px;
-      top: -110px;
-      border-radius: 50%;
-      border: 1px solid rgba(214, 243, 106, .3);
-      box-shadow:
-        0 0 0 30px rgba(214, 243, 106, .04),
-        0 0 0 60px rgba(214, 243, 106, .03);
-    }
-
-    .prescription-box .eyebrow {
-      color: var(--lime);
-    }
-
-    .prescription-box .eyebrow::before {
-      background: var(--lime);
-    }
-
-    .prescription-box h2 {
-      font-family: "Manrope", sans-serif;
-      font-size: clamp(29px, 4vw, 43px);
-      line-height: 1.15;
-      letter-spacing: -1.8px;
-      max-width: 500px;
-      margin-bo
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precious Pharmacy | Your Health, Our Priority</title>
+
+    <style>
+        /* GENERAL STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8faf7;
+            color: #24352b;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        /* NAVIGATION */
+        header {
+            background: white;
+            padding: 18px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #176b45;
+        }
+
+        .logo span {
+            color: #e5a83b;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #23945f;
+        }
+
+        .cart-button {
+            background: #176b45;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 25px;
+            font-size: 14px;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(120deg, #e8f5eb, #f5f8e9);
+            padding: 85px 0;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 45px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #d6edda;
+            color: #176b45;
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 5vw, 58px);
+            line-height: 1.15;
+            margin-bottom: 20px;
+            color: #173d2a;
+        }
+
+        .hero h1 span {
+            color: #26965e;
+        }
+
+        .hero p {
+            color: #58685d;
+            font-size: 16px;
+            max-width: 510px;
+            margin-bottom: 28px;
+        }
+
+        .primary-button {
+            display: inline-block;
+            background: #176b45;
+            color: white;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 7px;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .primary-button:hover {
+            background: #104d31;
+            transform: translateY(-3px);
+        }
+
+        .hero-image {
+            flex: 1;
+            min-height: 320px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-card {
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            width: 100%;
+            max-width: 390px;
+            text-align: center;
+            box-shadow: 0 15px 45px rgba(23, 107, 69, 0.12);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .hero-icon {
+            font-size: 100px;
+            margin-bottom: 15px;
+        }
+
+        .hero-card h2 {
+            color: #176b45;
+            margin-bottom: 8px;
+        }
+
+        .hero-card p {
+            margin: auto;
+            font-size: 14px;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* BENEFITS */
+        .benefits {
+            padding: 35px 0;
+            background: white;
+        }
+
+        .benefit-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            text-align: center;
+        }
+
+        .benefit-item {
+            padding: 15px;
+        }
+
+        .benefit-item .icon {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .benefit-item h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .benefit-item p {
+            font-size: 13px;
+            color: #718075;
+        }
+
+        /* SECTION HEADINGS */
+        .section {
+            padding: 75px 0;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-heading h2 {
+            font-size: 34px;
+            color: #173d2a;
+            margin-bottom: 10px;
+        }
+
+        .section-heading p {
+            color: #718075;
+            font-size: 15px;
+        }
+
+        /* SEARCH */
+        .search-box {
+            max-width: 500px;
+            margin: 0 auto 35px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 13px 16px;
+            border: 1px solid #d6dfd8;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: #26965e;
+        }
+
+        .search-box button {
+            background: #176b45;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0 20px;
+        }
+
+        /* PRODUCT CARDS */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid #edf0eb;
+            border-radius: 14px;
+            padding: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(23, 107, 69, 0.09);
+        }
+
+        .product-image {
+            height: 150px;
+            background: #edf7ee;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 65px;
+            margin-bottom: 20px;
+        }
+
+        .product-card h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .product-card p {
+            color: #718075;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .product-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #176b45;
+            font-size: 17px;
+        }
+
+        .add-button {
+            background: #e4f3e7;
+            color: #176b45;
+            border: none;
+            border-radius: 6px;
+            padding: 9px 12px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .add-button:hover {
+            background: #cde8d3;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #718075;
+            grid-column: 1 / -1;
+            padding: 30px;
+        }
+
+        /* ABOUT SECTION */
+        .about {
+            background: #edf5ed;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-icon {
+            flex: 1;
+            min-height: 270px;
+            background: #d9eadb;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 100px;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h2 {
+            font-size: 34px;
+            color: #173d2a;
+            margin-bottom: 18px;
+        }
+
+        .about-text p {
+            color: #58685d;
+            margin-bottom: 15px;
+        }
+
+        .about-text ul {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .about-text li {
+            margin-bottom: 10px;
+        }
+
+        .about-text li::before {
+            content: "✓ ";
+            color: #23945f;
+            font-weight: bold;
+        }
+
+        /* CONTACT */
+        .contact-card {
+            background: white;
+            border: 1px solid #edf0eb;
+            border-radius: 14px;
+            padding: 30px;
+            max-width: 700px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .contact-card p {
+            color: #718075;
+            margin: 12px 0;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #153d2a;
+            color: white;
+            padding: 35px 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .footer-content h3 {
+            margin-bottom: 10px;
+        }
+
+        .footer-content p,
+        .footer-content a {
+            color: #d0dfd3;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .copyright {
+            text-align: center;
+            border-top: 1px solid #365d47;
+            padding-top: 20px;
+            font-size: 13px;
+            color: #d0dfd3;
+        }
+
+        /* CART MESSAGE */
+        .message {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #176b45;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            display: none;
+            z-index: 200;
+            max-width: 85%;
+        }
+
+        /* MOBILE RESPONSIVENESS */
+        @media (max-width: 800px) {
+            .hero-content,
+            .about-content {
+                flex-direction: column;
+            }
+
+            .hero {
+                padding: 55px 0;
+            }
+
+            .hero-text,
+            .hero-image,
+            .about-text,
+            .about-icon {
+                width: 100%;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .benefit-grid {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+
+            .section {
+                padding: 50px 0;
+            }
+
+            .section-heading h2,
+            .about-text h2 {
+                font-size: 28px;
+            }
+
+            .hero h1 {
+                font-size: 39px;
+            }
+
+            .hero-card {
+                padding: 25px;
+            }
+
+            .search-box button {
+                padding: 0 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#home" class="logo">Precious<span>.</span></a>
+
+                <div class="nav-links">
+                    <a href="#home">Home</a>
+                    <a href="#products">Products</a>
+                    <a href="#about">About Us</a>
+                    <a href="#contact">Contact</a>
+
+                    <button class="cart-button" onclick="showCart()">
+                        🛒 Cart (<span id="cart-count">0</span>)
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- HERO SECTION -->
+        <section class="hero" id="home">
+            <div class="container hero-content">
+
+                <div class="hero-text">
+                    <span class="tag">YOUR HEALTH COMES FIRST</span>
+
+                    <h1>
+                        Your Health,<br>
+                        Our <span>Priority.</span>
+                    </h1>
+
+                    <p>
+                        Welcome to Precious Pharmacy, your trusted destination
+                        for everyday healthcare products and wellness essentials.
+                        We believe everyone deserves access to quality healthcare.
+                    </p>
+
+                    <a href="#products" class="primary-button">
+                        Explore Our Products →
+                    </a>
+                </div>
+
+                <div class="hero-image">
+                    <div class="hero-card">
+                        <div class="hero-icon">💊</div>
+                        <h2>Care You Can Trust</h2>
+                        <p>
+                            Supporting healthier lives through quality products
+                            and a commitment to your wellbeing.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- BENEFITS -->
+        <section class="benefits">
+            <div class="container benefit-grid">
+
+                <div class="benefit-item">
+                    <div class="icon">💚</div>
+                    <h3>Customer Care</h3>
+                    <p>Your wellbeing matters to us.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="icon">🩺</div>
+                    <h3>Health Essentials</h3>
+                    <p>Everyday healthcare products in one place.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="icon">🤝</div>
+                    <h3>Trusted Service</h3>
+                    <p>Committed to responsible healthcare.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PRODUCTS -->
+        <section class="section" id="products">
+            <div class="container">
+
+                <div class="section-heading">
+                    <h2>Explore Our Products</h2>
+                    <p>
+                        Discover some of the everyday healthcare essentials
+                        featured in our sample catalogue.
+                    </p>
+                </div>
+
+                <div class="search-box">
+                    <input
+                        type="text"
+                        id="search-input"
+                        placeholder="Search products..."
+                        aria-label="Search products"
+                    >
+                    <button onclick="searchProducts()">Search</button>
+                </div>
+
+                <div class="product-grid" id="product-grid">
+
+                    <div class="product-card" data-name="first aid kit">
+                        <div class="product-image">🩹</div>
+                        <h3>First Aid Kit</h3>
+                        <p>A sample first aid kit for everyday preparedness.</p>
+                        <div class="product-bottom">
+                            <span class="price">₦8,500</span>
+                            <button class="add-button"
+                                onclick="addToCart('First Aid Kit')">
+                                Add +
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-name="digital thermometer">
+                        <div class="product-image">🌡️</div>
+                        <h3>Digital Thermometer</h3>
+                        <p>A sample digital thermometer for temperature checks.</p>
+                        <div class="product-bottom">
+                            <span class="price">₦6,000</span>
+                            <button class="add-button"
+                                onclick="addToCart('Digital Thermometer')">
+                                Add +
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-name="hand sanitizer">
+                        <div class="product-image">🧴</div>
+                        <h3>Hand Sanitizer</h3>
+                        <p>A hand hygiene essential for everyday use.</p>
+                        <div class="product-bottom">
+                            <span class="price">₦2,500</span>
+                            <button class="add-button"
+                                onclick="addToCart('Hand Sanitizer')">
+                                Add +
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-name="face masks">
+                        <div class="product-image">😷</div>
+                        <h3>Face Masks</h3>
+                        <p>A sample listing of disposable protective masks.</p>
+                        <div class="product-bottom">
+                            <span class="price">₦3,000</span>
+                            <button class="add-button"
+                                onclick="addToCart('Face Masks')">
+                                Add +
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-name="cotton wool">
+                        <div class="product-image">🧻</div>
+                        <h3>Cotton Wool</h3>
+                        <p>A basic healthcare and personal care supply.</p>
+                        <div class="product-bottom">
+                            <span class="price">₦1,500</span>
+                            <button class="add-button"
+                                onclick="addToCart('Cotton Wool')">
+                                Add +
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-name="health supplies">
+                        <div class="product-image">🩺</div>
+                        <h3>Health Supplies</h3>
+                        <p>Explore our sample collection of wellness essentials.</p>
+                        <div class="product-bottom">
+                            <span class="price">₦4,000</span>
+                            <button class="add-button"
+                                onclick="addToCart('Health Supplies')">
+                                Add +
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT US -->
+        <section class="section about" id="about">
+            <div class="container about-content">
+
+                <div class="about-icon">🏥</div>
+
+                <div class="about-text">
+                    <span class="tag">ABOUT PRECIOUS PHARMACY</span>
+
+                    <h2>Healthcare Made Simpler</h2>
+
+                    <p>
+                        Precious Pharmacy is designed to make discovering
+                        everyday healthcare products easier and more convenient.
+                    </p>
+
+                    <p>
+                        Our goal is to provide a welcoming online experience
+                        where customers can explore health essentials and find
+                        information about our services.
+                    </p>
+
+                    <ul>
+                        <li>A simple and user-friendly website</li>
+                        <li>An organised product catalogue</li>
+                        <li>A focus on customer wellbeing</li>
+                        <li>Convenient access to pharmacy information</li>
+                    </ul>
+
+                    <a href="#contact" class="primary-button">
+                        Get In Touch
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section class="section" id="contact">
+            <div class="container">
+
+                <div class="section-heading">
+                    <h2>We're Here to Help</h2>
+                    <p>Have questions? We would be happy to hear from you.</p>
+                </div>
+
+                <div class="contact-card">
+                    <div style="font-size: 45px;">📩</div>
+
+                    <h3>Contact Precious Pharmacy</h3>
+
+                    <p>
+                        For enquiries about products and pharmacy services,
+                        please contact our team.
+                    </p>
+
+                    <p>
+                        <strong>Location:</strong> Update with your actual
+                        pharmacy address.                   </p>
+
+                    <p>
+                        <strong>Phone:</strong> Add your official phone number.
+                    </p>
+
+                    <p>
+                        <strong>Email:</strong> Add your official email address.
+                    </p>
+
+                    <p style="font-size: 12px;">
+                        Replace these placeholders with verified business
+                        information before publishing for customers.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+
+            <div class="footer-content">
+                <div>
+                    <h3>Precious Pharmacy</h3>
+                    <p>Your health, our priority.</p>
+                    <p>Making healthcare information easier to access.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <a href="#home">Home</a>
+                    <a href="#products">Products</a>
+                    <a href="#about">About Us</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>
+                    &copy; <span id="year"></span> Precious Pharmacy.
+                    All rights reserved.
+                </p>
+                <p>
+                    Student demonstration project. Product listings and prices
+                    are illustrative and are not confirmed offers for sale.
+                </p>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- MESSAGE -->
+    <div class="message" id="message" role="status" aria-live="polite"></div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Set the current year in the footer.
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+
+        // Keep track of the items added to the demonstration cart.
+        let cart = [];
+
+        // Add a product to the cart.
+        function addToCart(productName) {
+            cart.push(productName);
+
+            document.getElementById("cart-count").textContent =
+                cart.length;
+          showMessage("Your cart is empty.");
+                return;
+            }
+
+            let cartContents = cart.join(", ");
+
+            alert(
+                "Your Demo Cart\n\n" +
+                cartContents +
+                "\n\nTotal items: " + cart.length +
+                "\n\nThis is a demonstration only. No order has been placed."
+            );
+        }
+
+        // Display a temporary message.
+        function showMessage(text) {
+            const message = document.getElementById("message");
+
+            message.textContent = text;
+            message.style.display = "block";
+
+            setTimeout(function() {
+                message.style.display = "none";
+            }, 2500);
+        }
+
+        // Search for products by name.
+        function searchProducts() {
+            const input = document.getElementById("search-input");
+            const searchText = input.value.toLowerCase().trim();
+
+            const products =
+                document.querySelectorAll(".product-card");
+
+            let found = 0;
+
+            products.forEach(function(product) {
+                const productName =
+                    product.getAttribute("data-name");
+
+                if (productName.includes(searchText)) {
+                    product.style.display = "block";
+                    found++;
+                } else {
+                    product.style.display = "none";
+                }
+            });
+
+            const grid = document.getElementById("product-grid");
+            let noResults = document.getElementById("no-results");
+
+            if (found === 0) {
+                if (!noResults) {
+                    noResults = document.createElement("p");
+                    noResults.id = "no-results";
+                    noResults.className = "no-results";
+                    noResults.textContent =
+                        "No products found. Try another search.";
+                    grid.appendChild(noResults);
+                }
+            } else if (noResults) {
+                noResults.remove();
+            }
+        }
+
+        // Allow the user to search by pressing Enter.
+        document.getElementById("search-input")
+            .addEventListener("keydown", function(event) {
+                if (event.key === "Enter") {
+                    searchProducts();
+                }
+            });
+
+        // Show all products when the search box is cleared.
+        document.getElementById("search-input")
+            .addEventListener("input", function() {
+                if (this.value.trim() === "") {
+                    searchProducts();
+                }
+            });
+    </script>
+
+</body>
+</html>
